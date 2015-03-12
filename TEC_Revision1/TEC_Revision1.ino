@@ -357,10 +357,10 @@ void LCD_WelcomeScreen()
   LCD_Clear();                            //clear screen
   LCD_BlinkCursor(0);                      //turn off blinking cursor
   LCD_UnderlineCursor(0);                  //turn off underline
-  LCD_CursorSet(1, 4);
-  displayText("TEC Controller");
-  LCD_CursorSet(2, 5);
-  displayText("Revision 1.0");
+  LCD_CursorSet(1, 3);
+  displayText("Seraph  Robotics");
+  LCD_CursorSet(2, 3);
+  displayText("Cooling Unit 1.0");
   delay(2000);
   LCD_Clear();
   delay(200);
