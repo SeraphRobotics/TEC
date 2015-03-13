@@ -383,7 +383,7 @@ void displayTemperature()
 {
   tmp = "";
   tmp=String(int(cTemperature))+ "." + String(getDecimal(cTemperature));
-  tmp += " C";
+  tmp += " C ";
  
   LCD_CursorSet(1, 7);
   displayText(tmp);
@@ -439,7 +439,7 @@ long getDecimal(float val)
   tempValue1 = int(val) * 10L;
   tempValue2 = val * 10L;
   tempValue3 = tempValue2 - tempValue1;
-  return (tempValue3);
+  return abs(tempValue3);
 }
 
 
