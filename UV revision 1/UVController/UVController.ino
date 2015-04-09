@@ -43,8 +43,10 @@ int encoderPinALast=0;
 int setPointValue;
 int minVal=0;
 int maxVal=200;
+float percent=0;
+float percent10;
 float stepsize=0.5;
-float scale = 1.275;
+float scale = 2.55;//1.275;
 
 int encoderA;
 int encoderB;
@@ -96,21 +98,29 @@ void loop()
   
     if(Serial.available() >= 1){
         setPointValue = Serial.read();
-        if (setPointValue > maxVal){setPointValue = maxVal;}
-        Setpoint = setPointValue/stepsize*scale;
+
     }
   
   if (encFlag == 1)                      //update encoder value - display new setpoint if decoder change detected
   {
   
- //   Serial.println(setPoint);
-    displaySetPoint();
+    
     encFlag=0;
-    Setpoint = setPointValue/stepsize*scale;
+
   }
   
-  Serial.print("Setpoint = ");Serial.println(Setpoint);
+  if (setPointValue > maxVal){setPointValue = maxVal;}
+  if (setPointValue < minVal){setPointValue = minVal;}
+  Setpoint = setPointValue*stepsize*scale;
   
+  
+  percent = setPointValue*stepsize;
+  
+  //Serial.print("Setpoint = ");Serial.println(Setpoint);
+  Serial.print("\nSet Value = ");Serial.println(setPointValue);
+  Serial.print("Percent = ");Serial.println(percent);
+  displaySetPoint();
+  //delay(1000);
   analogWrite(pPWM,Setpoint);        //set PWM value to OUTPUT vallue of PID
   
 
@@ -308,18 +318,18 @@ void displaySetPoint()
 {
   tmp = "";
  // Serial.print("Setpoint= ");Serial.println(setPointValue);
-  int sp = (setPointValue/10);    //acquire whole digits
-  int dp = setPointValue - (sp*10);        //acquire decimal value
+  percent10=percent*10;
+  int sp = (percent10/10);    //acquire whole digits
+  int dp = percent10 - (sp*10);        //acquire decimal value
   
  // Serial.println(sp);
  // Serial.println(dp);
-
-  if (setPointValue < 0 && setPointValue >-10)
+  if (percent < 0 && percent >-10)
   {
     dp=dp*(-1);
     tmp="-"+String(sp)+ "." + String(dp);
   }
-  else if (setPointValue < -9)
+  else if (percent < -9)
   {
     sp=sp*(-1);
     dp=dp*(-1);
@@ -329,9 +339,9 @@ void displaySetPoint()
   {
     tmp=String(sp)+ "." + String(dp);
   }
-  tmp += " C  ";
+  tmp += "% ";
   
-  LCD_CursorSet(2,11);
+  LCD_CursorSet(2,1);
   displayText(tmp);
 
     EEPROM.write(0x00,setPointValue);          //store set point value (x10 of actual setpoint)
