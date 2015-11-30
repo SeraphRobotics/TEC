@@ -42,11 +42,11 @@ int encoderPinALast=0;
 
 int setPointValue;
 int minVal=0;
-int maxVal=200;
+int maxVal=255;
 float percent=0;
 float percent10;
-float stepsize=0.5;
-float scale = 2.55;//1.275;
+float stepsize=1.0;
+float scale = 1.0;//1.275;
 
 int encoderA;
 int encoderB;

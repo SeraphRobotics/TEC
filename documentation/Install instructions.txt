@@ -1,0 +1,9 @@
+1. You will need to change twi.h in your arduino folder. 
+C:\Program Files (x86)\Arduino\hardware\arduino\avr\libraries\Wire\utility
+Change the line
+#define TWI_FREQ 100000L   to   #define TWI_FREQ 50000L
+
+This lowers I2C frequency. The LCD module doesnt seem to like 100Khz.
+
+2. Attached are extra libraries I used for the code so you dont have to download them. They should be placed in the arduino/libraries folder so they are always available to you
+
